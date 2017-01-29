@@ -56,6 +56,10 @@ class CreateAccount extends Component {
   }
 
   render() {
+    if (this.props.loggedIn) {
+      return null
+    }
+
     return (
       <div>
         <h3> Create Account </h3>

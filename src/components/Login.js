@@ -17,6 +17,7 @@ class Login extends Component {
     this.handleUnameChange = this.handleUnameChange.bind(this);
     this.handlePwdChange = this.handlePwdChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.onLogin = this.props.onLogin.bind(this);
     this.state = {
       errorMessage: "",
       successMessage: "" };
@@ -50,12 +51,17 @@ class Login extends Component {
         that.setState({errorMessage: response.entity.message});
       }
       else {
+        that.onLogin(true, response.entity.token);
         console.log("login successful");
       }
     });
   }
 
   render() {
+    if (this.props.loggedIn) {
+      return null
+    }
+
     return (
       <div>
         <h3> Login </h3>
