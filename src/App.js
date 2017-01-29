@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 
 import CreateAccount from './components/CreateAccount.js'
+import ExpenseTable from './components/ExpenseTable.js'
 import Login from './components/Login.js'
 import SubmitExpense from './components/SubmitExpense.js'
 
@@ -33,6 +34,10 @@ class App extends Component {
         <CreateAccount loggedIn={loggedIn} />
         <Login loggedIn={loggedIn} onLogin={this.handleLogin}/>
         <SubmitExpense
+          loggedIn={loggedIn}
+          authToken={this.state.authToken}
+        />
+        <ExpenseTable
           loggedIn={loggedIn}
           authToken={this.state.authToken}
         />

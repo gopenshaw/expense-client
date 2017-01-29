@@ -4,7 +4,7 @@ import client from '../client.js'
 
 const errorMessageStyle = {
   height: 20,
-  color: "red",
+  color: "red"
 };
 
 const successMessageStyle = {
@@ -46,13 +46,11 @@ class Login extends Component {
         'password': this.state.password
       }
     }).then(function(response) {
-      console.log(response.entity);
       if (response.status.code === 422) {
         that.setState({errorMessage: response.entity.message});
       }
       else {
         that.onLogin(true, response.entity.token);
-        console.log("login successful");
       }
     });
   }
