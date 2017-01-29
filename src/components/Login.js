@@ -11,7 +11,7 @@ const successMessageStyle = {
   height: 20,
 };
 
-class CreateAccount extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
     this.handleUnameChange = this.handleUnameChange.bind(this);
@@ -39,7 +39,7 @@ class CreateAccount extends Component {
     var that = this;
     client({
       method: 'POST',
-      path: '/api/users',
+      path: '/api/authenticate',
       entity: {
         'name': this.state.username,
         'password': this.state.password
@@ -50,7 +50,7 @@ class CreateAccount extends Component {
         that.setState({errorMessage: response.entity.message});
       }
       else {
-        that.setState({successMessage: "User created. Please log in"});
+        console.log("login successful");
       }
     });
   }
@@ -58,7 +58,7 @@ class CreateAccount extends Component {
   render() {
     return (
       <div>
-        <h3> Create Account </h3>
+        <h3> Login </h3>
         <div style={errorMessageStyle} >
           {this.state.errorMessage}
         </div>
@@ -66,13 +66,14 @@ class CreateAccount extends Component {
           {this.state.successMessage}
       </div>
         <form onSubmit={this.handleSubmit}>
-        Username <input type="text" onChange={this.handleUnameChange}/> <br/>
+        Username
+        <input type="text" onChange={this.handleUnameChange}/> <br/>
         Password <input type="password" onChange={this.handlePwdChange}/> <br/>
-        <button> Create a new account </button>
+        <button> Login </button>
         </form>
       </div>
     )
   }
 }
 
-export default CreateAccount;
+export default Login;

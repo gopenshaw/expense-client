@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 
 import CreateAccount from './components/CreateAccount.js'
+import Login from './components/Login.js'
 
 class App extends Component {
   render() {
@@ -13,6 +14,7 @@ class App extends Component {
           <h2>Expense Reporting</h2>
         </div>
         <CreateAccount/>
+        <Login/>
       </div>
     );
   }
