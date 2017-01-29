@@ -4,6 +4,7 @@ import './App.css';
 
 import CreateAccount from './components/CreateAccount.js'
 import Login from './components/Login.js'
+import SubmitExpense from './components/SubmitExpense.js'
 
 class App extends Component {
   constructor(props) {
@@ -31,6 +32,10 @@ class App extends Component {
         </div>
         <CreateAccount loggedIn={loggedIn} />
         <Login loggedIn={loggedIn} onLogin={this.handleLogin}/>
+        <SubmitExpense
+          loggedIn={loggedIn}
+          authToken={this.state.authToken}
+        />
       </div>
     );
   }
