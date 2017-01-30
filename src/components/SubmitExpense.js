@@ -11,6 +11,10 @@ const successMessageStyle = {
   height: 20,
 };
 
+const submitExpenseStyle = {
+  marginBottom: 15
+}
+
 class SubmitExpense extends Component {
   constructor(props) {
     super(props);
@@ -66,7 +70,7 @@ class SubmitExpense extends Component {
     }
 
     return (
-      <div>
+      <div style={submitExpenseStyle}>
         <h3> Submit Expense </h3>
         <div style={errorMessageStyle} >
           {this.state.errorMessage}

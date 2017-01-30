@@ -12,14 +12,16 @@ class App extends Component {
     this.handleLogin = this.handleLogin.bind(this);
     this.state = {
       loggedIn: false,
-      authToken: "" };
+      authToken: "",
+      isAdmin: false };
   }
 
-  handleLogin(loggedIn, token, username) {
+  handleLogin(loggedIn, token, username, isAdmin) {
     this.setState({
       loggedIn: loggedIn,
       authToken: token,
-      username: username
+      username: username,
+      isAdmin: isAdmin
     });
   }
 

@@ -51,7 +51,7 @@ class Login extends Component {
         that.setState({errorMessage: response.entity.message});
       }
       else {
-        that.onLogin(true, response.entity.token, username);
+        that.onLogin(true, response.entity.token, username, response.entity.isAdmin);
       }
     });
   }

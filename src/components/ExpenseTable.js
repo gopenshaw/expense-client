@@ -48,6 +48,14 @@ class ExpenseTable extends Component {
       return null;
     }
 
+    if (this.state.expenses.length === 0) {
+      return (
+        <div>
+          You have no expenses.
+        </div>
+      );
+    }
+
     var rows = [];
     this.state.expenses.sort(function(a, b) {
       return a.date > b.date;
