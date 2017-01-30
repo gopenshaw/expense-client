@@ -1,5 +1,13 @@
 This is a React front end that consumes the API provided by https://github.com/gopenshaw/expense-server/
 
+To run:
+```
+git clone https://github.com/gopenshaw/expense-client/
+cd expense-client
+npm install
+npm start
+```
+
 Once logged in, the user can switch between expense report and expense view.
 
 For admin and non-admin, the expense report screen is the same. For the expense view, admins can see all expenses.
