@@ -42,14 +42,16 @@ class ExpenseReport extends Component {
     }
 
     var rows = [];
-    this.props.expenses.sort(function(a, b) {
-      return a.date > b.date;
+    const sortedExpenses = this.props.expenses.sort(function(a, b) {
+      return new Date(a.date) - new Date(b.date);
     })
     const beginDate = this.state.beginDate;
     const endDate = this.state.endDate;
-    this.props.expenses.forEach(function(expense) {
+    const username = this.props.username;
+    sortedExpenses.forEach(function(expense) {
       if ((!beginDate || expense.date >= beginDate)
-          && (!endDate || expense.date <= endDate)) {
+          && (!endDate || expense.date <= endDate)
+          && username === expense.user) {
         rows.push(
           <ExpenseReportRow
             date={expense.date}
@@ -67,6 +69,7 @@ class ExpenseReport extends Component {
     return (
       <div>
         <h3> Expense Report </h3>
+        <button onClick={this.props.handleChangeView}> Change to Expense View </button>
         <FilterBar handleChange={this.handleFilterChange}/>
         <WeeklyExpenses
           beginDate={beginDate}
