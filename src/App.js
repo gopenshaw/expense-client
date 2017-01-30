@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 import CreateAccount from './components/CreateAccount.js'
@@ -16,10 +15,11 @@ class App extends Component {
       authToken: "" };
   }
 
-  handleLogin(loggedIn, token) {
+  handleLogin(loggedIn, token, username) {
     this.setState({
       loggedIn: loggedIn,
-      authToken: token
+      authToken: token,
+      username: username
     });
   }
 
@@ -28,7 +28,6 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
           <h2>Expense Reporting</h2>
         </div>
         <CreateAccount loggedIn={loggedIn} />
@@ -40,6 +39,7 @@ class App extends Component {
         <ExpenseTable
           loggedIn={loggedIn}
           authToken={this.state.authToken}
+          username={this.state.username}
         />
       </div>
     );

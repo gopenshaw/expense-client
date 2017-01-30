@@ -38,11 +38,12 @@ class Login extends Component {
       successMessage: ""}
     );
     var that = this;
+    const username = this.state.username;
     client({
       method: 'POST',
       path: '/api/authenticate',
       entity: {
-        'name': this.state.username,
+        'name': username,
         'password': this.state.password
       }
     }).then(function(response) {
@@ -50,7 +51,7 @@ class Login extends Component {
         that.setState({errorMessage: response.entity.message});
       }
       else {
-        that.onLogin(true, response.entity.token);
+        that.onLogin(true, response.entity.token, username);
       }
     });
   }

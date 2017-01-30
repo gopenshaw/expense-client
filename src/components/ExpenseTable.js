@@ -16,9 +16,10 @@ class ExpenseTable extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.authToken) {
       var that = this;
+      var path = '/api/expenses/' + nextProps.username
       client({
         method: 'GET',
-        path: '/api/expenses?token=' + nextProps.authToken
+        path: path + '?token=' + nextProps.authToken
       }).then(function(response) {
         if (response.status.code === 200) {
           that.setState({expenses: response.entity.expenses});
@@ -35,6 +36,11 @@ class ExpenseTable extends Component {
     this.setState({
       [name]: value
     });
+  }
+
+  sumExpenses(rows) {
+    return rows.map(function(a) { return parseFloat(a.props.cost); })
+              .reduce(function(a, b) { return a + b; }, 0);
   }
 
   render() {
@@ -63,10 +69,17 @@ class ExpenseTable extends Component {
       }
     });
 
+    const expenseSum = this.sumExpenses(rows);
+
     return (
       <div>
-        <h3> Expense Table </h3>
+        <h3> Expense Report </h3>
         <FilterBar handleChange={this.handleFilterChange}/>
+        <WeeklyExpenses
+          beginDate={beginDate}
+          endDate={endDate}
+          expenseSum={expenseSum}
+        />
         <table style={tableStyle} >
           <thead>
             <tr>
@@ -105,16 +118,45 @@ class FilterBar extends Component {
   render() {
     return (
       <div>
-        <input
+        Begin Date <input
           type="date"
           name="beginDate"
           onChange={this.handleChange}
-        />
-        <input
+        /> <br/>
+        End Date <input
           type="date"
           name="endDate"
           onChange={this.handleChange}
         />
+      </div>
+    );
+  }
+}
+
+class WeeklyExpenses extends Component {
+  calculate(firstDate, lastDate, expenseSum) {
+    var days = Math.round((new Date(lastDate) - new Date(firstDate)) / (1000 * 60 * 60 * 24));
+    var weeks = Math.round(days / 7)
+    if (weeks < 1) weeks = 1;
+    return expenseSum / weeks;
+  }
+
+  render() {
+    if (!this.props.beginDate || !this.props.endDate
+        || this.props.endDate < this.props.beginDate) {
+      return null;
+    }
+
+    const weeklyExpenses = this.calculate(
+      this.props.beginDate,
+      this.props.endDate,
+      this.props.expenseSum
+    );
+
+    return (
+      <div>
+        Total Expenses: {this.props.expenseSum} <br/>
+        Weekly Expenses: {weeklyExpenses} <br/>
       </div>
     );
   }
