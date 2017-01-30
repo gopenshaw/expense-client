@@ -1,3 +1,11 @@
+This is a React front end that consumes the API provided by https://github.com/gopenshaw/expense-server/
+
+Once logged in, the user can switch between expense report and expense view.
+
+For admin and non-admin, the expense report screen is the same. For the expense view, admins can see all expenses.
+
+--------------------
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
