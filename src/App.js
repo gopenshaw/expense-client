@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 
 import CreateAccount from './components/CreateAccount.js'
-import ExpenseTable from './components/ExpenseTable.js'
+import ExpenseContainer from './components/ExpenseContainer.js'
 import Login from './components/Login.js'
-import SubmitExpense from './components/SubmitExpense.js'
 
 class App extends Component {
   constructor(props) {
@@ -26,7 +25,7 @@ class App extends Component {
   }
 
   render() {
-    const loggedIn= this.state.loggedIn;
+    const loggedIn = this.state.loggedIn;
     return (
       <div className="App">
         <div className="App-header">
@@ -34,14 +33,11 @@ class App extends Component {
         </div>
         <CreateAccount loggedIn={loggedIn} />
         <Login loggedIn={loggedIn} onLogin={this.handleLogin}/>
-        <SubmitExpense
-          loggedIn={loggedIn}
-          authToken={this.state.authToken}
-        />
-        <ExpenseTable
+        <ExpenseContainer
           loggedIn={loggedIn}
           authToken={this.state.authToken}
           username={this.state.username}
+          isAdmin={this.state.isAdmin}
         />
       </div>
     );

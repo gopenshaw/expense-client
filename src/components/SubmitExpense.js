@@ -20,6 +20,7 @@ class SubmitExpense extends Component {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.onSubmit = this.props.onSubmit.bind(this);
     this.state = {
       errorMessage: "",
       successMessage: "" };
@@ -57,6 +58,7 @@ class SubmitExpense extends Component {
       console.log(response.entity);
       if (response.status.code === 200) {
         that.setState({successMessage: "expense added"});
+        that.onSubmit(response.entity);
       }
       else {
         that.setState({errorMessage: response.entity.message});
@@ -65,10 +67,6 @@ class SubmitExpense extends Component {
   }
 
   render() {
-    if (!this.props.loggedIn) {
-      return null
-    }
-
     return (
       <div style={submitExpenseStyle}>
         <h3> Submit Expense </h3>

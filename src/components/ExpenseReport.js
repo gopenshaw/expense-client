@@ -1,31 +1,20 @@
 import React, { Component } from 'react';
 
-import client from '../client.js'
-
 const tableStyle = {
   marginLeft: "auto",
   marginRight: "auto"
 };
 
-class ExpenseTable extends Component {
+const weeklyExpenseStyle = {
+  margin: 10
+};
+
+class ExpenseReport extends Component {
   constructor(props) {
     super(props);
     this.handleFilterChange = this.handleFilterChange.bind(this);
-  }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.authToken) {
-      var that = this;
-      var path = '/api/expenses/' + nextProps.username
-      client({
-        method: 'GET',
-        path: path + '?token=' + nextProps.authToken
-      }).then(function(response) {
-        if (response.status.code === 200) {
-          that.setState({expenses: response.entity.expenses});
-        }
-      });
-    }
+    this.state = {};
   }
 
   handleFilterChange(event) {
@@ -44,11 +33,7 @@ class ExpenseTable extends Component {
   }
 
   render() {
-    if (!this.props.loggedIn || !this.state) {
-      return null;
-    }
-
-    if (this.state.expenses.length === 0) {
+    if (this.props.expenses.length === 0) {
       return (
         <div>
           You have no expenses.
@@ -57,16 +42,16 @@ class ExpenseTable extends Component {
     }
 
     var rows = [];
-    this.state.expenses.sort(function(a, b) {
+    this.props.expenses.sort(function(a, b) {
       return a.date > b.date;
     })
     const beginDate = this.state.beginDate;
     const endDate = this.state.endDate;
-    this.state.expenses.forEach(function(expense) {
+    this.props.expenses.forEach(function(expense) {
       if ((!beginDate || expense.date >= beginDate)
           && (!endDate || expense.date <= endDate)) {
         rows.push(
-          <ExpenseRow
+          <ExpenseReportRow
             date={expense.date}
             cost={expense.cost}
             description={expense.description}
@@ -104,12 +89,12 @@ class ExpenseTable extends Component {
   }
 }
 
-class ExpenseRow extends Component {
+class ExpenseReportRow extends Component {
   render() {
     return (
       <tr>
         <td>{this.props.date}</td>
-        <td>{this.props.cost}</td>
+        <td>{parseFloat(this.props.cost).toFixed(2)}</td>
         <td>{this.props.description}</td>
         <td>{this.props.user}</td>
       </tr>
@@ -162,12 +147,12 @@ class WeeklyExpenses extends Component {
     );
 
     return (
-      <div>
-        Total Expenses: {this.props.expenseSum} <br/>
-        Weekly Expenses: {weeklyExpenses} <br/>
+      <div style={weeklyExpenseStyle}>
+        Total Expenses: {this.props.expenseSum.toFixed(2)} <br/>
+        Weekly Expenses: {weeklyExpenses.toFixed(2)} <br/>
       </div>
     );
   }
 }
 
-export default ExpenseTable;
+export default ExpenseReport;
